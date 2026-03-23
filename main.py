@@ -1,6 +1,7 @@
 from data_layer.sql_database import initialize_db
 from agent.enterprise_ai_agent import AIAgent
 from pep.policy_enforcement_point import handle_request
+from idp.identity_provider import authenticate
 
 # Step 1: Initialize Database
 initialize_db()
@@ -33,4 +34,12 @@ print("\n--- Risk Engine Test ---\n")
 agent1.request_resource("employees")
 # Example: HR trying to access sales_cleaned (high risk)
 agent2.request_resource("sales_cleaned") 
+
+# Authenticate agent before creating it
+role = authenticate("Agent1", "pass1")
+if role:
+    agent1 = AIAgent("Agent1", role)
+else:
+    print("Authentication failed for Agent1") 
+
 
