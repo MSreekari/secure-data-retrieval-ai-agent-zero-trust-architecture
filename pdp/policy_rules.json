@@ -1,6 +1,0 @@
-{
-  "Analyst": ["sales_cleaned"],
-  "HR": ["employees"],
-  "Finance": ["revenue"],
-  "Admin": ["*"]
-}
