@@ -84,3 +84,48 @@
 2026-03-25 13:43:30 | Agent: Unknown | Role: Analyst | Resource: employees | Result: ACCESS DENIED: Role not allowed
 2026-03-25 13:43:30 | Agent: Unknown | Role: HR | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
 2026-03-25 13:45:37 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 18
+2026-03-30 10:34:17 | Agent: Unknown | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 19
+2026-03-30 10:34:17 | Agent: Unknown | Role: Analyst | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-30 10:34:17 | Agent: Unknown | Role: Analyst | Resource: revenue | Result: ACCESS DENIED: Role not allowed
+2026-03-30 10:34:17 | Agent: Unknown | Role: HR | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-30 10:34:17 | Agent: Unknown | Role: HR | Resource: employees | Result: ACCESS GRANTED | Risk Score: 15
+2026-03-30 10:34:17 | Agent: Unknown | Role: HR | Resource: revenue | Result: ACCESS DENIED: Role not allowed
+2026-03-30 10:34:17 | Agent: Unknown | Role: Finance | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-30 10:34:17 | Agent: Unknown | Role: Finance | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-30 10:34:17 | Agent: Unknown | Role: Finance | Resource: revenue | Result: ACCESS GRANTED | Risk Score: 5
+2026-03-30 10:34:17 | Agent: Unknown | Role: Admin | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 1
+2026-03-30 10:34:17 | Agent: Unknown | Role: Admin | Resource: employees | Result: ACCESS GRANTED | Risk Score: 5
+2026-03-30 10:34:17 | Agent: Unknown | Role: Admin | Resource: revenue | Result: ACCESS GRANTED | Risk Score: 6
+2026-03-30 10:34:17 | Agent: Unknown | Role: Analyst | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-30 10:34:17 | Agent: Unknown | Role: HR | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-30 11:33:51 | Agent: Unknown | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 13
+2026-03-30 11:33:51 | Agent: Unknown | Role: Analyst | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-30 11:33:51 | Agent: Unknown | Role: Analyst | Resource: revenue | Result: ACCESS DENIED: Role not allowed
+2026-03-30 11:33:51 | Agent: Unknown | Role: HR | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-30 11:33:51 | Agent: Unknown | Role: HR | Resource: employees | Result: ACCESS GRANTED | Risk Score: 17
+2026-03-30 11:33:51 | Agent: Unknown | Role: HR | Resource: revenue | Result: ACCESS DENIED: Role not allowed
+2026-03-30 11:33:51 | Agent: Unknown | Role: Finance | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-30 11:33:51 | Agent: Unknown | Role: Finance | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-30 11:33:51 | Agent: Unknown | Role: Finance | Resource: revenue | Result: ACCESS GRANTED | Risk Score: 3
+2026-03-30 11:33:51 | Agent: Unknown | Role: Admin | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 0
+2026-03-30 11:33:51 | Agent: Unknown | Role: Admin | Resource: employees | Result: ACCESS GRANTED | Risk Score: 12
+2026-03-30 11:33:51 | Agent: Unknown | Role: Admin | Resource: revenue | Result: ACCESS GRANTED | Risk Score: 20
+2026-03-30 11:33:51 | Agent: Unknown | Role: Analyst | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-30 11:33:51 | Agent: Unknown | Role: HR | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:32:55 | Agent: Unknown | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 11
+2026-03-31 10:32:55 | Agent: Unknown | Role: Analyst | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:32:55 | Agent: Unknown | Role: Analyst | Resource: revenue | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:32:55 | Agent: Unknown | Role: HR | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:32:55 | Agent: Unknown | Role: HR | Resource: employees | Result: ACCESS GRANTED | Risk Score: 20
+2026-03-31 10:32:55 | Agent: Unknown | Role: HR | Resource: revenue | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:32:55 | Agent: Unknown | Role: Finance | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:32:55 | Agent: Unknown | Role: Finance | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:32:55 | Agent: Unknown | Role: Finance | Resource: revenue | Result: ACCESS GRANTED | Risk Score: 11
+2026-03-31 10:32:55 | Agent: Unknown | Role: Admin | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 19
+2026-03-31 10:32:55 | Agent: Unknown | Role: Admin | Resource: employees | Result: ACCESS GRANTED | Risk Score: 15
+2026-03-31 10:32:55 | Agent: Unknown | Role: Admin | Resource: revenue | Result: ACCESS GRANTED | Risk Score: 17
+2026-03-31 10:32:55 | Agent: Unknown | Role: Analyst | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:32:55 | Agent: Unknown | Role: HR | Resource: sales_cleaned | Result: ACCESS DENIED: Role not allowed
+2026-03-31 10:33:13 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 14
+2026-03-31 11:13:16 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 2
+2026-03-31 11:16:59 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 8

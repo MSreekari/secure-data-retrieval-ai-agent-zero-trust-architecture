@@ -1,10 +1,17 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 from prompt.prompt_parser import parse_prompt
 from pep.policy_enforcement_point import handle_request
 from idp.identity_provider import authenticate
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # For production, replace with your frontend URL
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class AgentRequest(BaseModel):
     prompt: str
