@@ -1,26 +1,45 @@
+import re
+
 def parse_prompt(prompt: str):
     """
-    Parse user prompt.
-    Expected formats:
+    Improved Parse logic using Regex.
+    Supports:
     - "Access sales_cleaned as Analyst"
-    - "Show employees as HR"
-    Returns: role, resource
+    - "Analyst access to sales_cleaned"
+    - "[Analyst] access sales_cleaned"
     """
-    prompt = prompt.lower()
-    parts = prompt.split(" as ")
-    if len(parts) != 2:
-        return None, None  # invalid prompt
+    # 1. Clean the input
+    prompt = prompt.strip().lower()
     
-    resource_part = parts[0].replace("access ", "").replace("show ", "").strip()
-    role_part = parts[1].capitalize().strip()
+    # 2. Pattern A: "Access [resource] as [role]"
+    # Pattern B: "[role] access to [resource]"
+    patterns = [
+        r"access\s+(?P<resource>\w+)\s+as\s+(?P<role>\w+)",
+        r"(?P<role>\w+)\s+access\s+to\s+(?P<resource>\w+)",
+        r"\[(?P<role>\w+)\]\s+access\s+(?P<resource>\w+)"
+    ]
     
-    # Map common names to DB tables
+    role, resource_part = None, None
+    
+    for pattern in patterns:
+        match = re.search(pattern, prompt, re.IGNORECASE)
+        if match:
+            role = match.group("role").capitalize()
+            resource_part = match.group("resource").lower()
+            break
+
+    if not role or not resource_part:
+        return None, None
+
+    # 3. Robust Resource Mapping
     resource_map = {
         "sales_cleaned": "sales_cleaned",
+        "sales": "sales_cleaned",
         "employees": "employees",
+        "staff": "employees",
         "revenue": "revenue"
     }
+    
     resource = resource_map.get(resource_part)
     
-    return role_part, resource 
-
+    return role, resource

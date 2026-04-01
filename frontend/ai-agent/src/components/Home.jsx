@@ -11,7 +11,7 @@ export const Home = () => {
             <span className='text-6xl font-sansflex bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent'>Secure, Context-Aware Access.</span>
             </h1>
             <p className='text-white text-2xl font-sansflex'>Every request is verified, every action is controlled, and every access is monitored.</p>
-            <button onClick={() => navigate('/chat')} className='flex cursor-pointer text-white bg-[#814AC8] hover:bg-white transition-colors hover:text-black rounded-4xl px-6 py-4'>
+            <button onClick={() => navigate('/login')} className='flex cursor-pointer text-white bg-[#814AC8] hover:bg-white transition-colors hover:text-black rounded-4xl px-6 py-4'>
               Get Started 
               <span> <ArrowUpRight /> </span>
             </button>

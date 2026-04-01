@@ -129,3 +129,21 @@
 2026-03-31 10:33:13 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 14
 2026-03-31 11:13:16 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 2
 2026-03-31 11:16:59 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 8
+2026-03-31 20:16:17 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 6
+2026-03-31 20:46:41 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 9
+2026-03-31 20:47:01 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 12
+2026-03-31 21:36:08 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 4
+2026-03-31 21:39:05 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 2
+2026-03-31 21:40:33 | Agent: Agent1 | Role: Analyst | Resource: employees | Result: ACCESS DENIED: Role not allowed
+2026-03-31 21:50:53 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 5
+2026-03-31 21:55:31 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 20
+2026-03-31 22:07:21 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 2
+2026-03-31 22:10:19 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 11
+2026-03-31 22:13:43 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 6
+2026-03-31 22:23:13 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 1
+2026-03-31 22:24:43 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 17
+2026-04-01 08:56:22 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 6
+2026-04-01 09:33:24 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 6
+2026-04-01 09:36:25 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 20
+2026-04-01 09:38:48 | Agent: Agent2 | Role: Hr | Resource: revenue | Result: ACCESS DENIED: Role not allowed
+2026-04-01 09:57:05 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 15
