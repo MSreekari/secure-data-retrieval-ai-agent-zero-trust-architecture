@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import React, { useState, useEffect, useRef } from "react";
 import { Send, User, Bot, Loader2, AlertTriangle, Activity, ShieldAlert, Maximize2, Minimize2 } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -12,7 +11,6 @@ const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   
-  // Initialize with 0 so the box isn't empty
   const [riskScore, setRiskScore] = useState(0); 
   const [riskHistory, setRiskHistory] = useState([{time: '00:00', score: 0}]);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -23,18 +21,27 @@ const ChatPage = () => {
   const handleSend = async (e) => {
     e.preventDefault();
     if (!formData.prompt.trim()) return;
+    
     const token = auth?.token || localStorage.getItem("access_token");
     const p = formData.prompt;
+    
     setMessages(prev => [...prev, { role: "user", text: p }]);
     setIsLoading(true);
     setFormData({ prompt: "" });
 
     try {
-      const response = await fetch("http://localhost:8000/agent/request", {
+      // DYNAMIC URL: Uses Vercel environment variable or falls back to local
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      
+      const response = await fetch(`${apiUrl}/agent/request`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: { 
+          "Content-Type": "application/json", 
+          Authorization: `Bearer ${token}` 
+        },
         body: JSON.stringify({ prompt: p }),
       });
+      
       const data = await response.json();
       
       // Update Score and History
@@ -42,8 +49,11 @@ const ChatPage = () => {
       if (data.risk_history) setRiskHistory(data.risk_history);
       if (data.security_alert) setShowAlert(true);
       if (data.result) setMessages(prev => [...prev, { role: "ai", text: data.result }]);
-    } catch (error) {
-      setMessages(prev => [...prev, { role: "ai", text: "Connection Error." }]);
+      
+    } catch (err) {
+      // Fixed: Variable 'err' is now used to satisfy Vercel's build rules
+      console.error("Connection error to security gateway:", err);
+      setMessages(prev => [...prev, { role: "ai", text: "Connection Error. Check if backend is live." }]);
     } finally {
       setIsLoading(false);
     }
@@ -54,11 +64,11 @@ const ChatPage = () => {
       
       {/* GLOBAL ALERT BANNER */}
       {showAlert && (
-        <div className="fixed top-0 left-0 w-full z-[9999] bg-red-600 text-white p-4 flex justify-between items-center animate-pulse shadow-2xl">
+        <div className="fixed top-0 left-0 w-full z-50 bg-red-600 text-white p-4 flex justify-between items-center animate-pulse shadow-2xl">
           <div className="flex items-center gap-2 font-bold uppercase tracking-tighter">
             <AlertTriangle size={20}/> IDS ALERT: CRITICAL THREAT DETECTED
           </div>
-          <button onClick={() => setShowAlert(false)} className="bg-white text-red-600 px-4 py-1 rounded text-[10px] font-black">ACKNOWLEDGE</button>
+          <button onClick={() => setShowAlert(false)} className="bg-white text-red-600 px-4 py-1 rounded text-[10px] font-black hover:bg-zinc-100 transition-colors">ACKNOWLEDGE</button>
         </div>
       )}
 
@@ -85,21 +95,27 @@ const ChatPage = () => {
           </main>
           <footer className="p-6">
             <form onSubmit={handleSend} className="max-w-3xl mx-auto relative">
-              <input type="text" value={formData.prompt} onChange={(e) => setFormData({ prompt: e.target.value })} placeholder="Access table as Role..." className="w-full bg-zinc-900 border border-white/10 rounded-xl py-4 px-6 outline-none focus:border-indigo-500 text-white transition-all shadow-2xl" />
-              <button type="submit" disabled={isLoading} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-indigo-500 text-white rounded-lg">
+              <input 
+                type="text" 
+                value={formData.prompt} 
+                onChange={(e) => setFormData({ prompt: e.target.value })} 
+                placeholder="Access table as Role..." 
+                className="w-full bg-zinc-900 border border-white/10 rounded-xl py-4 px-6 outline-none focus:border-indigo-500 text-white transition-all shadow-2xl" 
+              />
+              <button type="submit" disabled={isLoading} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors">
                 {isLoading ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
               </button>
             </form>
           </footer>
         </div>
 
-        {/* --- FORCED SIDEBAR (NUCLEAR VERSION) --- */}
+        {/* --- MONITORING SIDEBAR --- */}
         <div 
           style={{ 
             width: isExpanded ? '480px' : '320px', 
             minWidth: isExpanded ? '480px' : '320px',
             transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            zIndex: 50
+            zIndex: 40
           }}
           className="h-full bg-zinc-900 border-l border-white/10 flex flex-col p-6 gap-6 shadow-[-20px_0_50px_rgba(0,0,0,0.5)]"
         >
