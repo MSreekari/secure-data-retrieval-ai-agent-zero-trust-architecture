@@ -147,3 +147,57 @@
 2026-04-01 09:36:25 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 20
 2026-04-01 09:38:48 | Agent: Agent2 | Role: Hr | Resource: revenue | Result: ACCESS DENIED: Role not allowed
 2026-04-01 09:57:05 | Agent: Agent1 | Role: Analyst | Resource: sales_cleaned | Result: ACCESS GRANTED | Risk Score: 15
+[2026-04-03 21:07:29] User: sales_cleaned | Role: Analyst | Resource: akshay | Status: DENIED: Unknown Agent Identity
+[2026-04-03 21:13:06] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 21:14:48] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 21:15:03] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 21:15:06] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 21:15:08] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 22:43:01] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 22:43:41] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Role Mismatch
+[2026-04-03 22:44:12] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 22:49:02] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 22:50:17] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: DENIED: Unknown Agent Identity
+[2026-04-03 22:53:09] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-03 22:53:26] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 22:53:35] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 22:53:36] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:09:27] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-03 23:09:35] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:09:41] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:09:43] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:12:21] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-03 23:12:34] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:12:36] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:12:40] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:15:06] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-03 23:15:43] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:19:16] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-03 23:19:34] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:21:18] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:23:58] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:25:43] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:27:49] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:29:25] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:30:32] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:32:07] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:33:21] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:38:52] User: akshay | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-03 23:38:58] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:39:07] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:39:09] User: akshay | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:44:23] User: abcd | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-03 23:44:29] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:53:26] User: abcd | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-03 23:53:42] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:53:45] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-03 23:53:47] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-04 12:27:13] User: abcd | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-04 12:27:25] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-04 12:27:27] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-04 12:27:30] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-04 13:04:54] User: abcd | Role: Analyst | Resource: sales_cleaned | Status: SUCCESS: Access Granted
+[2026-04-04 13:05:03] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-04 13:05:11] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-04 13:05:12] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch
+[2026-04-04 13:05:13] User: abcd | Role: Analyst | Resource: employees | Status: DENIED: Role Mismatch

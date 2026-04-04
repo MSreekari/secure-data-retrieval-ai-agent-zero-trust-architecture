@@ -4,28 +4,26 @@ from fastapi import FastAPI, HTTPException, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
+import os
 
 # Your custom imports
 from prompt.prompt_parser import parse_prompt
 from pep.policy_enforcement_point import handle_request
-from idp.identity_provider import authenticate
+from idp.identity_provider import authenticate_user
+
+# IMPORT the shared IDS state functions and metrics
+from monitoring.logger import log_request, record_unauthorized, attempts 
+from monitoring.metrics import get_risk_analysis 
+from dotenv import load_dotenv
 
 app = FastAPI()
 
-# Security Constants
-SECRET_KEY = "zz0Ez-oYWPE8hN-vhpio86dCFOmxGv4GTZ-o0I9M99c"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+load_dotenv()
 
-# --- INTRUSION DETECTION SYSTEM (IDS) ---
-# Key: (agent_name, resource), Value: count of unauthorized attempts
-attempts = {}
-
-def record_unauthorized(agent_name, resource):
-    key = (agent_name, resource)
-    attempts[key] = attempts.get(key, 0) + 1
-    # Return True if we hit the threshold, else False
-    return attempts[key] >= 3
+# Now pull the values from the environment
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM", "HS256") # Default to HS256 if not found
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
 
 # --- CORS Configuration ---
 origins = [
@@ -38,12 +36,12 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"], 
 )
 
 # --- MODELS ---
 class LoginRequest(BaseModel):
-    agent_name: str
+    username: str  
     password: str
 
 class ChatRequest(BaseModel):
@@ -69,42 +67,70 @@ def verify_token(authorization: str = Header(None)):
 
 # --- ROUTES ---
 
-@app.post("/agent/authenticate")
+@app.post("/api/login")
 def login(request: LoginRequest):
-    role = authenticate(request.agent_name, request.password)
+    role = authenticate_user(request.username, request.password) 
     
     if not role:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        raise HTTPException(status_code=401, detail="Invalid User Credentials")
     
-    token = create_access_token({"sub": request.agent_name, "role": role})
+    token = create_access_token({"sub": request.username, "role": role})
     
     return {
         "status": "success",
         "access_token": token,
-        "token_type": "bearer",
-        "role": role,
-        "agent_name": request.agent_name
+        "agent_name": request.username, 
+        "role": role
     }
 
 @app.post("/agent/request")
 def handle_agent_chat(request: ChatRequest, user_data: dict = Depends(verify_token)):
-    agent_name = user_data.get("sub")
+    # 1. Identify who is asking (from JWT)
+    human_username = user_data.get("sub")
     role_from_token = user_data.get("role")
     
+    # 2. Identify what they want (from Prompt)
     role_from_prompt, resource = parse_prompt(request.prompt)
     
     if not role_from_prompt or not resource:
-        raise HTTPException(status_code=400, detail="Invalid prompt format")
+        raise HTTPException(status_code=400, detail="Invalid prompt format. Use 'Access [table] as [Role]'")
     
+    # 3. ZERO TRUST CHECK: Role Mismatch
     if role_from_prompt.strip().lower() != role_from_token.strip().lower():
-        # Check if this attempt triggers a threshold alert
-        is_alert = record_unauthorized(agent_name, resource)
+        is_alert = record_unauthorized(human_username, resource)
+        log_request(human_username, role_from_token, resource, "DENIED: Role Mismatch")
+        
+        # Get Risk Data for the UI
+        score, history = get_risk_analysis(attempts, human_username, resource)
         
         return {
-            "result": f"Access Denied: Role Mismatch.",
+            "result": f"Access Denied: You are authenticated as {role_from_token}, but trying to act as {role_from_prompt}.",
             "security_alert": is_alert,
+            "risk_score": score,
+            "risk_history": history,
             "error": True
         }
     
-    result = handle_request(role_from_prompt, resource, agent_name)
-    return {"result": result, "security_alert": False, "error": False}
+    # 4. POLICY CHECK
+    result = handle_request(role_from_prompt, resource, human_username)
+    
+    # Calculate current risk metrics even for successful requests
+    score, history = get_risk_analysis(attempts, human_username, resource)
+
+    # Normalize response based on PEP result
+    if isinstance(result, dict) and result.get("status") == "success":
+        return {
+            "result": f"ACCESS GRANTED. Data: {result['data']}", 
+            "risk_score": score,
+            "risk_history": history,
+            "security_alert": False, 
+            "error": False
+        }
+    
+    return {
+        "result": result, 
+        "risk_score": score,
+        "risk_history": history,
+        "security_alert": False, 
+        "error": True
+    }

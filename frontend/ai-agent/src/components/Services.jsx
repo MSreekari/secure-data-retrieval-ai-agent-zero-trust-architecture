@@ -1,4 +1,6 @@
 import React from 'react'
+import { motion } from 'framer-motion';
+
 const services = [
     {
         category : "Agent Identity", 
@@ -34,33 +36,44 @@ const Services = () => {
                 <span className='text-white font-sansflex text-5xl bg-clip-text'>authenticated, authorized, and monitored AI access</span>
             </h1>
         </div>
-        <div className="flex flex-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-            <div key={index} className="lex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-24">
-      
+        <div className="flex flex-col gap-24 py-20 px-6 w-full max-w-7xl mx-auto">
+    {services.map((service, index) => (
+        <motion.div 
+            key={index}
+            initial={{ opacity: 0, y: 50 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-24 w-full`}
+        >
+            <div className="w-full md:w-1/2 bg-zinc-900 border border-zinc-800 rounded-2xl h-80 flex items-center justify-center text-zinc-600">
+                {service.category} Visual
+            </div>
+
+            <div className="w-full md:w-1/2 flex flex-col items-start text-left gap-4">
                 <span className="text-xs font-sansflex text-indigo-400 uppercase tracking-widest">
                     {service.category}
                 </span>
       
-                <h2 className="text-2xl font-sansflex text-white">
+                <h2 className="text-4xl font-sansflex text-white font-medium leading-tight">
                     {service.title}
                 </h2>
 
-                <h3 className="text-2xl font-sansflex text-white">
+                <p className="text-xl font-sansflex text-zinc-400 leading-relaxed">
                     {service.description}
-                </h3>
+                </p>
       
-                {/* 3. Info Tags (Two or three words with rounded-full) */}
                 <div className="flex flex-wrap gap-2 mt-2">
                     {service.tags.map((tag, i) => (
-                    <span key={i} className="px-3 py-1 text-xs font-sansflex text-zinc-400 border border-zinc-700 rounded-full bg-zinc-800/50">
-                        {tag}
-                    </span>
-                ))}
+                        <span key={i} className="px-3 py-1 text-xs font-sansflex text-zinc-400 border border-zinc-700 rounded-full bg-zinc-800/50">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
             </div>
-        </div>
-        ))}
-    </div>
+        </motion.div>
+    ))}
+</div>
     </section>
   )
 }

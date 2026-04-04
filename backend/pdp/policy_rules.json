@@ -1,6 +1,11 @@
 {
-  "Analyst": ["sales_cleaned"],
-  "HR": ["employees"],
-  "Finance": ["revenue"],
-  "Admin": ["*"]
+    "Analyst": {
+        "tables": ["sales_cleaned", "revenue"]
+    },
+    "HR": {
+        "tables": ["employees"]
+    },
+    "Admin": {
+        "tables": ["sales_cleaned", "employees", "revenue"]
+    }
 }

@@ -5,12 +5,10 @@ import { Shield, Lock, User, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth'; 
 
 export const LoginPage = () => {
-    const [fields, setFields] = useState({ name: '', pass: '' });
+    const [fields, setFields] = useState({ agent_name: '', pass: '' }); 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    
-    // Grab the login function from our Global Context
     const { login } = useAuth();
 
     const handleLogin = async (e) => {
@@ -19,13 +17,11 @@ export const LoginPage = () => {
         setError('');
 
         try {
-            console.log("Authorizing Agent:", fields.name);
-            
-            const response = await fetch('http://localhost:8000/agent/authenticate', {
+            const response = await fetch('http://localhost:8000/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    agent_name: fields.name,
+                    username: fields.agent_name, // Matches 'request.username' in FastAPI
                     password: fields.pass
                 }),
             });
@@ -33,47 +29,52 @@ export const LoginPage = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                setError(data.detail || "Authorization Failed");
+                // FIX: Check if detail is an object to prevent React crash
+                const msg = typeof data.detail === 'object' 
+                    ? (data.detail.msg || JSON.stringify(data.detail)) 
+                    : (data.detail || "Authentication Failed");
+                
+                setError(msg);
                 return;
             }
 
-            console.log("Token Received:", data.access_token);
-
             // 1. SAVE TO GLOBAL CONTEXT
-            // We store the token and role. No need to store the password in state!
             login({ 
-                name: data.agent_name, 
+                name: data.username || data.agent_name, 
                 role: data.role,
                 token: data.access_token 
             });
 
-            // 2. SAVE TO LOCALSTORAGE (For Persistence on Page Refresh)
+            // 2. SAVE TO LOCALSTORAGE
             localStorage.setItem("access_token", data.access_token);
-            localStorage.setItem("agent_name", data.agent_name);
-            localStorage.setItem("agent_role", data.role);
+            localStorage.setItem("username", data.username || data.agent_name);
+            localStorage.setItem("user_role", data.role);
 
-            // 3. Navigate to the Secure Gateway
+            // 3. Navigate
             navigate('/chat');
 
         } catch (err) {
-            console.error("Gateway Connection Error:", err);
-            setError("Security Server Unreachable. Ensure FastAPI is running on port 8000.");
+            setError("Connection Error: Is the FastAPI server running on port 8000?");
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <div className="h-screen flex items-center justify-center bg-zinc-950 -m-4 md:-m-8">
+        <div className="h-screen flex items-center justify-center bg-zinc-950 -m-4 md:-m-8 font-sansflex">
             <form onSubmit={handleLogin} className="bg-zinc-900/40 backdrop-blur-xl p-10 rounded-3xl border border-white/10 w-full max-w-md space-y-6 shadow-2xl">
                 <div className="text-center space-y-2">
-                    <h1 className="text-2xl font-sansflex text-white uppercase tracking-wider">Agent Portal</h1>
-                    <p className="text-zinc-500 text-sm">Secure AI Gateway Authorization</p>
+                    <div className="flex justify-center mb-4">
+                        <Shield className="text-[#814AC8]" size={40} />
+                    </div>
+                    <h1 className="text-2xl text-white uppercase tracking-wider font-medium">Identity Portal</h1>
+                    <p className="text-zinc-500 text-sm">Verify your credentials to access the AI Gateway</p>
                 </div>
 
+                {/* This block is now safe from the "Object as Child" crash */}
                 {error && (
-                    <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-xs p-3 rounded-lg text-center animate-pulse">
-                        {error}
+                    <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-xs p-3 rounded-lg text-center animate-in fade-in duration-300">
+                        {String(error)}
                     </div>
                 )}
 
@@ -83,10 +84,10 @@ export const LoginPage = () => {
                         <input 
                             required
                             type="text"
-                            placeholder="Agent Name"
+                            placeholder="Username"
                             className="w-full bg-zinc-800 border border-zinc-700 rounded-xl py-3 pl-10 pr-4 text-white outline-none focus:border-[#814AC8] transition-all"
-                            value={fields.name}
-                            onChange={e => setFields({...fields, name: e.target.value})}
+                            value={fields.agent_name}
+                            onChange={e => setFields({...fields, agent_name: e.target.value})}
                         />
                     </div>
                     <div className="relative">
@@ -105,14 +106,14 @@ export const LoginPage = () => {
                 <button 
                     type="submit" 
                     disabled={isLoading}
-                    className='flex justify-center w-full cursor-pointer text-white bg-[#814AC8] hover:bg-white transition-all hover:text-black font-sansflex rounded-full px-6 py-4 disabled:bg-zinc-800 disabled:cursor-not-allowed'
+                    className='flex justify-center w-full cursor-pointer text-white bg-[#814AC8] hover:bg-[#935ce2] transition-all font-sansflex rounded-full px-6 py-4 disabled:bg-zinc-800'
                 >
                     {isLoading ? (
                         <div className="flex items-center gap-2">
                             <Loader2 className="animate-spin" size={20} />
-                            <span>Verifying Credentials...</span>
+                            <span>Verifying...</span>
                         </div>
-                    ) : "Authorize Agent"}
+                    ) : "Sign In to Gateway"}
                 </button>
             </form>
         </div>

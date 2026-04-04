@@ -28,7 +28,6 @@ function App() {
       <Router>
         <div className="min-h-screen bg-zinc-950">
           <Routes>
-            {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             
