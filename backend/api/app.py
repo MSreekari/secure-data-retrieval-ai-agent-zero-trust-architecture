@@ -29,11 +29,12 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60")
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://your-frontend-name.vercel.app",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"], # Highly recommended for a one-day student demo
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"], 
