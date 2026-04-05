@@ -17,7 +17,7 @@ export const LoginPage = () => {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:8000/api/login', {
+            const response = await fetch('https://secure-data-retrieval-ai-agent-zero.onrender.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
