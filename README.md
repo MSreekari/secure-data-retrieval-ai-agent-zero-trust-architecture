@@ -11,6 +11,7 @@ In the current landscape of enterprise AI, most systems rely on static authentic
 **3. Data Exposure:** Sensitive business data (like employee salaries or revenue metrics) is often exposed in full, even when only a subset is required for the task.
 
 ## The Solution
+
 Secure AI addresses these risks by implementing a Zero Trust Gateway modeled after the NIST 800-207 standards. Instead of assuming trust, the system treats every individual data request as a potential threat.
 
 **1. Continuous Authorization:** By decoupling security logic (PEP/PDP) from the business data, the gateway validates the agent's identity and permissions for every single query, rather than just at login.
@@ -42,42 +43,22 @@ You can use the following credentials to test the different access levels:
 ## System Architecture 
 ![System Architecture](architecture/secure-ai-system-architecture.png)
 
-**1. Identity Provider (IdP)**:- 
-    *Role:* Authentication.
-    *Function:* This is the entry point. It verifies the identity of the AI Agent or user attempting to connect.
-    *How it works:* It checks the credentials (or JWT token) against the users database. It establishes the "Identity Context"—basically saying, "I know who this agent is, and I have assigned them a specific role (e.g., Analyst, HR)."
+**1. Identity Provider (IdP) :-** This is the entry point. It verifies the identity of the AI Agent or user attempting to connect. It checks the credentials (or JWT token) against the users database. It establishes the "Identity Context"—basically saying, "I know who this agent is, and I have assigned them a specific role (e.g., Analyst, HR)."
 
-**2. Policy Enforcement Point (PEP)**
-     *Role:* Interception & Enforcement.
-     *Function:* Acting as your Flask middleware, the PEP sits right at the front of the pipeline. It intercepts every incoming HTTP request.
-     *How it works:* It does not make decisions; it only enforces them. It pauses the request and asks the PDP, "Is this allowed?" If the PDP says "No," the PEP drops the connection immediately. It ensures no data ever reaches the DB without a "thumbs up" from the logic layer.
+**2. Policy Enforcement Point (PEP) :-** Acting as the Flask middleware, the PEP sits right at the front of the pipeline. It intercepts every incoming HTTP request. It does not make decisions; it only enforces them. It pauses the request and asks the PDP, "Is this allowed?" If the PDP says "No," the PEP drops the connection immediately. It ensures no data ever reaches the DB without a "thumbs up" from the logic layer.
 
-**3. Policy Decision Point (PDP)**
-     *Role:* Authorization & Logic.
-     *Function:* This is where your business rules reside. It compares the Agent's identity (from IdP) against the requested data resource.
-     *How it works:* It evaluates the RBAC (Role-Based Access Control) Matrix. It checks: Does this role (e.g., HR) have permission to view this table (e.g., employees)? It is the final "Yes/No" decision-maker.
+**3. Policy Decision Point (PDP) :-** This is where your business rules reside. It compares the Agent's identity (from IdP) against the requested data resource. It evaluates the RBAC (Role-Based Access Control) Matrix. It checks: Does this role (e.g., HR) have permission to view this table (e.g., employees)? It is the final "Yes/No" decision-maker.
 
-**4. Risk Engine & Behavioral Monitoring**
-     *Role:* Anomaly Detection (IDS).
-     *Function:* This sits alongside the data flow. It calculates the Weighted Risk Score for every agent.
-     *How it works:* Every time an agent makes a request, the monitoring system updates its risk profile. If an agent hits a specific threshold (e.g., three unauthorized attempts), this module triggers an "Alert" status. It is the component that makes your system "Proactive" rather than just "Reactive."
+**4. Risk Engine & Behavioral Monitoring :-** This sits alongside the data flow. It calculates the Weighted Risk Score for every agent. Every time an agent makes a request, the monitoring system updates its risk profile. If an agent hits a specific threshold (e.g., three unauthorized attempts), this module triggers an "Alert" status. It is the component that makes your system "Proactive" rather than just "Reactive."
 
-**5. Data Masking Engine**
-     *Role:* Data Loss Prevention (DLP).
-     *Function:* This acts as a protective buffer between the Database and the AI Agent.
-     *How it works:* After the database query succeeds, the raw data passes through this engine. It uses pattern matching (RegEx) to redact sensitive PII if the agent doesn't have the "clearance" to see those specific fields. It ensures that even if data is retrieved, it is "cleaned" before reaching the user.
+**5. Data Masking Engine :-** This acts as a protective buffer between the Database and the AI Agent. After the database query succeeds, the raw data passes through this engine. It uses pattern matching (RegEx) to redact sensitive PII if the agent doesn't have the "clearance" to see those specific fields. It ensures that even if data is retrieved, it is "cleaned" before reaching the user.
 
-**6. Secure Data Layer (Database)**
-    *Role:* Persistence.
-    *Function:* This stores your actual business data (sales_cleaned, employees, etc.).
-    *How it works:* It is purposefully isolated. Because of the PEP/PDP architecture, the outside world (the AI Agent) cannot talk to this layer directly. They must go through the entire security pipeline first.
+**6. Secure Data Layer (Database) :-** This stores your actual business data (sales_cleaned, employees, etc.). It is purposefully isolated. Because of the PEP/PDP architecture, the outside world (the AI Agent) cannot talk to this layer directly. They must go through the entire security pipeline first.
 
-**7. Continuous Monitoring & Logging System**
-     *Role:* Compliance & Accountability.
-     *Function:* it generates logs, it note down every action perfromed every logina nd action.
-     *How it works:* Every transaction—success or failure—is recorded with a timestamp, the agent's ID, the resource requested, and the security decision made. This is essential for post-incident analysis
+**7. Continuous Monitoring & Logging System :-** It generates logs, it note down every action perfromed every logina nd action. Every transaction—success or failure—is recorded with a timestamp, the agent's ID, the resource requested, and the security decision made. This is essential for post-incident analysis
 
 ## Data Flow
+
 ![System Data Flow](architecture/secure-ai-dfd.png)
 
 The Secure AI Gateway operates on a strict Zero Trust Lifecycle. Data does not flow directly from the Agent to the Database; every request must pass through a multi-stage validation pipeline.
