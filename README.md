@@ -42,7 +42,8 @@ You can use the following credentials to test the different access levels:
 ## System Architecture 
 ![System Architecture](architecture/secure-ai-system-architecture.png)
 
-**1. Identity Provider (IdP)**
+**1. Identity Provider (IdP)**:- 
+
     *Role:* Authentication.
     *Function:* This is the entry point. It verifies the identity of the AI Agent or user attempting to connect.
     *How it works:* It checks the credentials (or JWT token) against the users database. It establishes the "Identity Context"—basically saying, "I know who this agent is, and I have assigned them a specific role (e.g., Analyst, HR)."
