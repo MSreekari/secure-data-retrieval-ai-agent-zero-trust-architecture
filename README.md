@@ -43,7 +43,7 @@ You can use the following credentials to test the different access levels:
 ## System Architecture 
 ![System Architecture](architecture/secure-ai-system-architecture.png)
 
-**1. Identity Provider (IdP) :-** This is the entry point. It verifies the identity of the AI Agent or user attempting to connect. It checks the credentials (or JWT token) against the users database. It establishes the "Identity Context"—basically saying, "I know who this agent is, and I have assigned them a specific role (e.g., Analyst, HR)."
+**1. Identity Provider (IdP) :-** This is the entry point. It verifies the identity of the AI Agent or user attempting to connect. It checks the credentials (or JWT token) against the users database. It establishes the "Identity Context" basically saying, "I know who this agent is, and I have assigned them a specific role (e.g., Analyst, HR)."
 
 **2. Policy Enforcement Point (PEP) :-** Acting as the Flask middleware, the PEP sits right at the front of the pipeline. It intercepts every incoming HTTP request. It does not make decisions; it only enforces them. It pauses the request and asks the PDP, "Is this allowed?" If the PDP says "No," the PEP drops the connection immediately. It ensures no data ever reaches the DB without a "thumbs up" from the logic layer.
 
