@@ -3,14 +3,20 @@
 ## Problem Statement
 
 In the current landscape of enterprise AI, most systems rely on static authentication. Once an AI agent or a user logs in, they are granted broad, persistent access to organizational data. This creates three critical vulnerabilities:
+
 **1. Over-privileged Agents:** AI agents are often granted access to entire databases, increasing the "blast radius" if the agent is compromised.
+
 **2. Lack of Contextual Security:** Standard systems cannot distinguish between a legitimate request and an malicious "Prompt Injection" or unauthorized data scraping attempt.
+
 **3. Data Exposure:** Sensitive business data (like employee salaries or revenue metrics) is often exposed in full, even when only a subset is required for the task.
 
 ## The Solution
 Secure AI addresses these risks by implementing a Zero Trust Gateway modeled after the NIST 800-207 standards. Instead of assuming trust, the system treats every individual data request as a potential threat.
+
 **1. Continuous Authorization:** By decoupling security logic (PEP/PDP) from the business data, the gateway validates the agent's identity and permissions for every single query, rather than just at login.
+
 **2. Granular RBAC:** Access is strictly enforced at the database table level. For example, an HR user is restricted to the employees table, and any attempt to access sales_cleaned triggers a security alert.
+
 **3. Dynamic Data Masking:** The system serves as a protective buffer, sanitizing and masking sensitive information in real-time, ensuring the AI agent only "sees" the data it is strictly authorized to process.
 **4. Behavioral Monitoring:** A built-in Intrusion Detection System (IDS) calculates risk scores, enabling proactive mitigation of suspicious query patterns.
 
@@ -76,14 +82,19 @@ You can use the following credentials to test the different access levels:
 
 The Secure AI Gateway operates on a strict Zero Trust Lifecycle. Data does not flow directly from the Agent to the Database; every request must pass through a multi-stage validation pipeline.
 *The Request Lifecycle :- *
-1. Identity Verification (P1): All incoming API Requests are intercepted. The Identity Provider (IdP) verifies the agent's identity using a User Credential Store and validates the HS256 JWT. If the identity is not cryptographically verified, the request is rejected immediately.
-2. Authorization (P2-P3): The Policy Enforcement Point (PEP) acts as the gatekeeper, querying the Policy Decision Point (PDP). The PDP cross-references the request against the Access Policy Matrix (RBAC Rules) to determine if the agent has the necessary permissions.
-3. Decision Logic (P4): The system makes a binary decision:
+
+**1. Identity Verification (P1):** All incoming API Requests are intercepted. The Identity Provider (IdP) verifies the agent's identity using a User Credential Store and validates the HS256 JWT. If the identity is not cryptographically verified, the request is rejected immediately.
+
+**2. Authorization (P2-P3):** The Policy Enforcement Point (PEP) acts as the gatekeeper, querying the Policy Decision Point (PDP). The PDP cross-references the request against the Access Policy Matrix (RBAC Rules) to determine if the agent has the necessary permissions.
+
+**3. Decision Logic (P4):** The system makes a binary decision:
    *Unauthorized:* The request is terminated, and a security event is logged.
    *Authorized:* The request proceeds to the data-processing stage.
-4. Data Masking (P5): Authorized requests access the data layer. Before the response is sent, the Data Masking Engine sanitizes the payload, ensuring that sensitive PII is redacted based on the user's role.
-5. Monitoring & IDS (P6-P7): All interactions are mirrored to the Weighted Risk Scoring engine. The system logs every interaction in the Audit Log Store.
-   If the agent’s behavior crosses the defined risk threshold, the IDS (Intrusion Detection System) triggers an alert, notifying the Security Admin Dashboard of a potential threat.
+   
+**4. Data Masking (P5)**: Authorized requests access the data layer. Before the response is sent, the Data Masking Engine sanitizes the payload, ensuring that sensitive PII is redacted based on the user's role.
+
+**5. Monitoring & IDS (P6-P7):** All interactions are mirrored to the Weighted Risk Scoring engine. The system logs every interaction in the Audit Log Store.
+If the agent’s behavior crosses the defined risk threshold, the IDS (Intrusion Detection System) triggers an alert, notifying the Security Admin Dashboard of a potential threat.
 
 ## Screenshots
 
@@ -93,6 +104,8 @@ The Secure AI Gateway operates on a strict Zero Trust Lifecycle. Data does not f
 Identity Verification interface illustrating the integration of secure session handling and role-based credential validation.
 
 ![Chat Page](screenshots/chat-page.png) 
+
+![Chat Page](screenshots/alert-and-graph-generated.png) 
 Behavioral Monitoring interface displaying real-time risk scores and automated IDS alerts triggered by unauthorized access attempts.
 
 ## Performance Metrics 
